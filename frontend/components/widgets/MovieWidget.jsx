@@ -23,7 +23,7 @@ const MovieWidget = ({ movieTitle }) => {
 
   const navMovie = () => {
     if (movieData) {
-      navigate(`/movie/${movieData.imdbID}`);
+      navigate(`/movie/${movieData.imdbID}`, {state: movieData}); // State passes temporary data between pages w/o using query parameters
     }
   };
 
