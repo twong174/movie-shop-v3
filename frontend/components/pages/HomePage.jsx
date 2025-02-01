@@ -11,10 +11,10 @@ import Main from "../Main";
 const HomePage = () => {
   return (
     <div className="grid grid-rows-[1fr_10fr] h-screen">
-      <div className="">
+      <div>
         <Header />
       </div>
-      <div className="bg-green-100">
+      <div>
         <Main />
       </div>
     </div>

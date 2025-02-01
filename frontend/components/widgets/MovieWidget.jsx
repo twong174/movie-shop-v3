@@ -5,9 +5,16 @@ const MovieWidget = () => {
   return (
     <div>
       <img src={TestPoster} />
-      <div>
-        <p> Batman </p> 
+      <div className="flex justify-between">
+        <p> Batman </p>
+        <p> Movie </p>
       </div>
+
+      <div className="flex justify-between">
+        <p> 2024</p>
+        <p> 114M </p>
+      </div>
+      <p> $5.99</p>
     </div>
   );
 };
