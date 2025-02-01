@@ -13,6 +13,15 @@ const Header = () => {
     navigate("/home");
   };
 
+  const navAccount = () => {
+    navigate("/account");
+  };
+
+  const navCart = () => {
+    navigate("/cart");
+  };
+
+
   return (
     <div className="p-2 grid grid-cols-[auto_1fr_1fr_auto] items-center gap-15">
       <div
@@ -45,12 +54,12 @@ const Header = () => {
         <Search />
       </div>
       <div className="flex gap-2">
-        <div className="flex  items-center">
+        <div className="flex  items-center" onClick = {navCart}>
           <ShoppingCartIcon />
           <p className="text-sm"> Cart </p>
         </div>
 
-        <div className="flex  items-center">
+        <div className="flex items-center" onClick ={navAccount}>
           <PersonIcon />
           <p className="text-sm"> Account </p>
         </div>

@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = () => {
+
+ 
+
   return (
     <div className="h-full flex items-center justify-center">
       <div className="w-full flex items-center border rounded-md cursor-pointer">

@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
-const RegisterPage = () => {
+const AccountPage = () => {
 
   return(
     <div>
 
-      Register Page
+      Account Page
     </div>
   );
 };
 
-export default RegisterPage;
+export default AccountPage;

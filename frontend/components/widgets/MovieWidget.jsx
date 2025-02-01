@@ -1,9 +1,16 @@
 import React from "react";
 import TestPoster from "/Users/tylerwong/movie-shop-v3/frontend/test_movie_poster.png";
+import { useNavigate } from "react-router-dom";
 
 const MovieWidget = () => {
+  const navigate = useNavigate();
+
+  const navMovie = () => {
+    navigate("/movie");
+  };
+
   return (
-    <div className="mt-3 mb-3 cursor-pointer">
+    <div className="mt-3 mb-3 cursor-pointer" onClick={navMovie}>
       <img className="rounded-lg" src={TestPoster} />
       <div className="flex justify-between mt-2 px-1">
         <p className="font-semibold	text-xl"> Batman </p>
