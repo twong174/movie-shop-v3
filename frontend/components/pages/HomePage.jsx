@@ -11,12 +11,9 @@ import Main from "../Main";
 const HomePage = () => {
   return (
     <div className="grid grid-rows-[1fr_10fr] h-screen">
-      <div>
-        <Header />
-      </div>
-      <div>
-        <Main />
-      </div>
+      <Header />
+
+      <Main />
     </div>
   );
 };
