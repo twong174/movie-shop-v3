@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [username, setUsername] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const register = () => {
-    if (!name || !username || !emailAddress || !password || !confirmPassword) {
+  const register = async () => {
+    if (!firstName || !username || !emailAddress || !password || !confirmPassword) {
       alert("Missing fields");
+      return;
     }
 
-    if (confirmPassword === password) {
-      alert("User registered in!");
-      navigate("/login");
-    } else {
-      alert("Passwords don't match");
+    if (password !== confirmPassword) {
+      alert("Passwords dont match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/users/registerUser",
+        {
+          firstName,
+          username,
+          emailAddress,
+          password,
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Registered!");
+        navigate("/login");
+      }
+    } catch (error) {
+      alert(error.response.data.message);
     }
   };
 
@@ -33,8 +52,8 @@ const WelcomePage = () => {
             <input
               className="text-sm placeholder-black border-b p-2 w-full mt-2 focus:outline-none"
               placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
               type="text"
             />
 
