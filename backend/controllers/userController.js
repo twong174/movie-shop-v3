@@ -1,20 +1,19 @@
-const axios = require("axios");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-app.post("/registerUser", async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, username, emailAddress, password } = req.body;
 
-    const existingUser = User.findOne({ username });
+    const existingUser = await User.findOne({ username });
 
     if (existingUser) {
-      res.status(400).send({ message: "User already exists" });
+      return res.status(400).send({ message: "User already exists" });
     }
 
     const saltRounds = 10;
 
-    hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newUser = new User({
       firstName,
@@ -25,9 +24,14 @@ app.post("/registerUser", async (req, res) => {
     });
 
     await newUser.save();
+    res.status(201).send({message: "User registered successfully"});
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
   }
-});
+};
 
-app.get("/getUser", async (req, res) => {});
+const getUser = async (req, res) => {
+
+};
+
+module.exports = {registerUser, getUser};
