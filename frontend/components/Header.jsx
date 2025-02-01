@@ -4,9 +4,11 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+import Search from "./Search";
+
 const Header = () => {
   return (
-    <div className="p-2 grid grid-cols-[auto_1fr_auto] gap-50 items-center">
+    <div className="p-2 grid grid-cols-[auto_1fr_1fr_auto] items-center gap-15">
       <div className="w-full flex gap-1 items-center">
         <VideocamIcon />
         <p className="text-xl font-bold"> PopcornPix </p>
@@ -30,6 +32,9 @@ const Header = () => {
             TV Shows{" "}
           </li>
         </ul>
+      </div>
+      <div>
+        <Search/>
       </div>
       <div className="flex gap-2">
         <div className="flex  items-center">

@@ -6,17 +6,17 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import Header from "../Header";
 import Search from "../Search";
+import Main from "../Main";
 
 const HomePage = () => {
   return (
-    <div className="grid grid-rows-[1fr_1fr_10fr] h-screen">
-      <div>
+    <div className="grid grid-rows-[1fr_10fr] h-screen">
+      <div className="">
         <Header />
       </div>
-      <div className="">
-        <Search />
+      <div className="bg-green-100">
+        <Main />
       </div>
-      <div className="bg-green-100 p-2">3</div>
     </div>
   );
 };
