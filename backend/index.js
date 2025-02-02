@@ -3,8 +3,7 @@ const dotenv = require("dotenv").config();
 const cors = require("cors");
 const movieRoutes = require("./routes/movieRoutes");
 const userRoutes = require("./routes/userRoutes");
-const loginRoute = require("./routes/loginRoute");
-const logoutRoute = require("./routes/logoutRoute");
+const authRoutes = require("./routes/authRoutes");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const passport = require("passport");
@@ -30,8 +29,7 @@ app.use(passport.session());
 
 app.use("/api/movies", movieRoutes);
 app.use("/api/users", userRoutes);
-app.use("/", loginRoute);
-app.use("/", logoutRoute);
+app.use("/api/auth", authRoutes);
 
 
 const PORT = process.env.PORT;
