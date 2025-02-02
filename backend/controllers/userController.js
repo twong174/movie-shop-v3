@@ -5,7 +5,7 @@ const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, username, emailAddress, password } = req.body;
 
-    const existingUser = await User.findOne({ username, emailAddress});
+    const existingUser = await User.findOne({ username, emailAddress });
 
     if (existingUser) {
       return res.status(400).send({ message: "User already exists" });
@@ -24,14 +24,17 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).send({message: "User registered successfully"});
+    res.status(201).send({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
 const getUser = async (req, res) => {
-
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+  res.json(req.user);
 };
 
-module.exports = {registerUser, getUser};
+module.exports = { registerUser, getUser };
