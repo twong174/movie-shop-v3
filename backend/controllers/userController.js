@@ -31,10 +31,11 @@ const registerUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ message: "Not authenticated" });
+  if (req.isAuthenticated()) {
+    res.json({ user: req.user });
+  } else {
+    res.status(401).json({ message: "Not authenticated" });
   }
-  res.json(req.user);
 };
 
 module.exports = { registerUser, getUser };
