@@ -1,17 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 
 const LoginPage = () => {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
-
-  const handleClick = async (e) => {
-    e.preventDefault();
-    await login(username, password);
-  };
 
   return (
     <div className="w-full h-screen p-10 bg-gray-100 flex items-center justify-center">
@@ -33,7 +25,7 @@ const LoginPage = () => {
               type="password"
             />
           </div>
-          <button className="cursor-pointer text-sm rounded-xl bg-black text-white w-full p-2 mt-4" onClick = {handleClick}>
+          <button className="cursor-pointer text-sm rounded-xl bg-black text-white w-full p-2 mt-4">
             Login
           </button>
           <p className="text-xs mt-15">
