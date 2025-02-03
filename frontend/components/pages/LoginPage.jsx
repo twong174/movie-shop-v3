@@ -1,9 +1,39 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data.authenticated) {
+        alert("authenticated");
+        navigate("/home");
+      } else {
+        alert("NOT Authenticated");
+        navigate("/login");
+      }
+      
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data);
+    }
+  };
 
   return (
     <div className="w-full h-screen p-10 bg-gray-100 flex items-center justify-center">
@@ -25,7 +55,10 @@ const LoginPage = () => {
               type="password"
             />
           </div>
-          <button className="cursor-pointer text-sm rounded-xl bg-black text-white w-full p-2 mt-4">
+          <button
+            className="cursor-pointer text-sm rounded-xl bg-black text-white w-full p-2 mt-4"
+            onClick={login}
+          >
             Login
           </button>
           <p className="text-xs mt-15">
