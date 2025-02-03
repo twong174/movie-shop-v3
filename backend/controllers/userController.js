@@ -32,9 +32,9 @@ const registerUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({ user: req.user });
+    res.json({ authenticated: true, user: req.user });
   } else {
-    res.status(401).json({ message: "Not authenticated" });
+    res.status(401).json({ authenticated: false, message: "Not authenticated" });
   }
 };
 
