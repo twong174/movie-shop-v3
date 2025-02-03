@@ -11,7 +11,7 @@ const MovieCard = () => {
   const [addedToCart, setAddedToCart] = useState(false);
 
   const addToCart = () => {
-    setAddedToCart(!addedToCart);
+    setAddedToCart(true);
     alert("Added to cart!");
   };
 
@@ -32,7 +32,7 @@ const MovieCard = () => {
                 <div className="flex gap-2">
                   <button
                     className="cursor-pointer rounded-xl p-2 bg-blue-700 text-white"
-                    onClick={addToCart}
+                    onClick={addToCart} disabled={addedToCart}
                   >
                     {addedToCart ? "Added to Cart" : "Add to Cart"}
                   </button>
