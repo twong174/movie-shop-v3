@@ -123,25 +123,66 @@ app.get("/getMovie", async (req, res) => {
   }
 });
 
-app.post('/addToCart', async (req, res) => { 
-  try { 
-    const {movieName, price} = req.body;
+app.post("/addToCart", async (req, res) => {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "User not authenticated!" });
+    }
 
-    const formattedPrice = parseFloat(price).toFixed(2)
+    const { productId, movieName, price } = req.body;
 
-    const newCart = new Cart({
-      productId: new mongoose.Types.ObjectId(),
-      movieName,
-      price: formattedPrice,
-    })
+    const userId = req.user._id;
 
-    console.log("Generated productId:", newCart.productId);  // This should not be null
+    let cart = await Cart.findOne({ userId });
 
-    await newCart.save();
+    if (!cart) {
+      cart = new Cart({
+        userId,
+        items: [],
+      });
+    }
 
-    res.status(201).send({message: "Successfully added to cart!"});
-  } catch (error) { 
-    console.log(error)
+    const existingItemIndex = cart.items.findIndex(
+      (item) => item.productId === productId
+    );
+
+    if (existingItemIndex > -1) {
+      cart.items[existingItemIndex].quantity += 1;
+    } else {
+      cart.items.push({
+        productId,
+        movieName,
+        price: parseFloat(price),
+        quantity: 1,
+      });
+    }
+
+    await cart.save();
+
+    res.status(201).send({ message: "Successfully added to cart!" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/getCart", async (req, res) => {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "User not authenticated!" });
+    }
+
+    const userId = req.user._id;
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(200).json({ items: [] });
+    }
+
+    res.status(200).json({ items: cart.items });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching cart!" });
   }
 });
 

@@ -22,6 +22,8 @@ const MoviePage = () => {
         productId: movieData.imdbID, 
         movieName: movieData.Title,
         price: price,
+      }, { 
+        withCredentials: true
       });
 
       if (response.status === 201) {
