@@ -4,14 +4,12 @@ import MainSection from "../widgets/MainSection";
 
 const HomePage = () => {
   return (
-    <div className="w-full h-screen grid grid-rows-[auto_1fr] gap-2 p-1">
+    <div className="w-full h-screen grid grid-rows-[auto_1fr] gap-2 p-2">
       <div className="h-full">
-        {" "}
-        <Header />{" "}
+        <Header />
       </div>
       <div className="h-full ">
-        {" "}
-        <MainSection />{" "}
+        <MainSection />
       </div>
     </div>
   );

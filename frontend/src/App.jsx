@@ -10,6 +10,7 @@ import SettingsAccount from "../components/pages/settings/SettingsAccount";
 import SettingsOrder from "../components/pages/settings/SettingsOrder";
 import SettingsCart from "../components/pages/settings/SettingsCart";
 import MoviePage from "../components/widgets/MoviePage";
+import ThankYouPage from "../components/pages/ThankYouPage";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
               <Route path="orders" element={<SettingsOrder />} />
             </Route>
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/thankyou" element={<ThankYouPage />} />
+
             <Route path ="/movie/:imdbID" element={<MoviePage/>}/>
           </Route>
         </Routes>

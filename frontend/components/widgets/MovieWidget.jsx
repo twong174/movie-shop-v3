@@ -33,26 +33,34 @@ const MovieWidget = ({ movieTitle }) => {
     }
   }, [movieTitle]);
 
+  const price = movieData
+    ? parseFloat(movieData.imdbRating).toFixed(2)
+    : "0.00";
+
   return (
     <div className="p-1">
       {movieData ? (
         <>
           <div onClick={navMovie}>
             <img src={movieData.Poster} />
-            <p className="font-semibold">{movieData.Title}</p>
-            <div className="flex justify-between px-1">
-              <div className="flex gap-2">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold">{movieData.Title}</p>
+              {movieData.Type === "movie" ? <MovieLabel /> : <ShowLabel />}
+            </div>
+
+            <div className="flex justify-between">
+              <div className="flex items-center gap-2">
                 <p className="text-sm font-medium text-gray-600">
                   {movieData.Year}
                 </p>
+                <span className="text-gray-600 font-bold">&#183;</span>
+
                 <p className="text-sm font-medium text-gray-600">
                   {movieData.Runtime}
                 </p>
               </div>
-              <MovieLabel />
             </div>
-            <p className="px-1 font-semibold text-sm"> $5.99</p>
-            <p>{movieData.imdbID}</p>
+            <p className="px-1 font-semibold text-sm"> ${price}</p>
           </div>
         </>
       ) : (
