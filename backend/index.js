@@ -186,6 +186,38 @@ app.get("/getCart", async (req, res) => {
   }
 });
 
+app.post("/deleteItem", async (req, res) => {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "User not authenticated!" });
+    }
+
+    const userId = req.user._id;
+
+    const { productId } = req.body;
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(401).json({ message: "Cart not found!" });
+    }
+
+    const initialLength = cart.items.length;
+    cart.items = cart.items.filter((item) => item.productId !== productId);
+
+    if (cart.items.length === initialLength) {
+      return res.status(404).json({ message: "Item not found in the cart!" });
+    }
+
+    await cart.save();
+    return res
+      .status(201)
+      .json({ message: "Successfully removed item from cart" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Listening on PORT: ${process.env.PORT}`);
 });
