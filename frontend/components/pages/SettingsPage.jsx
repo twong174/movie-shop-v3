@@ -6,13 +6,6 @@ import { Link, Outlet } from "react-router-dom";
 
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 
-import AccountWidget from "../widgets/AccountWidget";
-import OrderHistoryWidget from "../widgets/OrderHistoryWidget";
-
-import SettingsAccount from "./settings/SettingsAccount";
-import SettingsOrder from "./settings/SettingsOrder";
-import SettingsCart from "./settings/SettingsCart";
-
 const AccountPage = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();

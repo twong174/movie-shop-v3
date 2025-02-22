@@ -8,6 +8,7 @@ const session = require("express-session");
 require("./config/passportConfig");
 const User = require("./models/UserModel");
 const Cart = require("./models/CartModel");
+const Order = require("./models/OrderModel");
 const bcrypt = require("bcrypt");
 
 mongoose.connect(process.env.MONGOOSE_URL);
@@ -215,6 +216,26 @@ app.post("/deleteItem", async (req, res) => {
       .json({ message: "Successfully removed item from cart" });
   } catch (error) {
     console.log(error);
+  }
+});
+
+app.post("/checkout", async (req, res) => {
+  try {
+    const { cartItems, totalAmount, transactionDate } = req.body;
+
+    const order = new Order({
+      userId: req.user._id,
+      items: cartItems,
+      totalAmount: totalAmount,
+      transactionDate: transactionDate,
+    });
+
+    await order.save();
+
+    res.status(200).send("Order placed!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occurred while placing the order.");
   }
 });
 
