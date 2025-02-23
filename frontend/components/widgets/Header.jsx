@@ -63,7 +63,7 @@ const Header = () => {
             GENRES
           </button>
           <div className="absolute left-1/2 transform -translate-x-1/2 hidden group-hover:block hover:block pt-2">
-            <div className="w-72 bg-white p-4 border rounded-lg shadow-lg">
+            <div className="w-95 bg-white p-4 border rounded-lg shadow-lg">
               <div className="grid grid-cols-3 gap-4">
                 <ul>
                   <li className="hover:bg-gray-200 p-1">Action</li>

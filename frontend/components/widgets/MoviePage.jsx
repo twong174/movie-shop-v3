@@ -8,14 +8,13 @@ const MoviePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const movieData = location.state;
+  const price = parseFloat(movieData.imdbRating).toFixed(2);
 
   const addToCart = async () => {
     if (!movieData || !movieData.imdbRating) {
       alert("Invalid movie data");
       return;
     }
-
-    const price = parseFloat(movieData.imdbRating).toFixed(2);
 
     try {
       const response = await axios.post(
@@ -76,6 +75,7 @@ const MoviePage = () => {
                   <p> Production: {movieData.Production} </p>
                 </div>
               </div>
+              <p> ${price}</p>
               <button
                 className="bg-black text-white font-medium cursor-pointer w-1/3 p-2 rounded-md  mt-35"
                 onClick={addToCart}
