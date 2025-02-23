@@ -221,21 +221,59 @@ app.post("/deleteItem", async (req, res) => {
 
 app.post("/checkout", async (req, res) => {
   try {
-    const { cartItems, totalAmount, transactionDate } = req.body;
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "User not authenticated!" });
+    }
+
+    const userId = req.user._id;
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart || cart.items.length === 0) {
+      return res.status(400).json({ message: "Cart is empty!" });
+    }
+
+    const totalAmount = cart.items.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
 
     const order = new Order({
-      userId: req.user._id,
-      items: cartItems,
-      totalAmount: totalAmount,
-      transactionDate: transactionDate,
+      userId,
+      items: cart.items,
+      totalAmount,
+      transactionDate: new Date(),
     });
 
     await order.save();
 
-    res.status(200).send("Order placed!");
+    await Cart.deleteOne({ userId });
+
+    res.status(200).json({ message: "Order placed successfully!", order });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while placing the order.");
+  }
+});
+
+app.get("/getOrders", async (req, res) => {
+  try {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "User not authenticated!" });
+    }
+
+    const userId = req.user._id;
+
+    const order = await Order.findOne({ userId });
+
+    if (!order) {
+      return res.status(200).json({ items: [] });
+    }
+
+    res.status(200).json({ items: order.items });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching order!" });
   }
 });
 

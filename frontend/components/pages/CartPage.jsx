@@ -42,9 +42,21 @@ const CartPage = () => {
       .toFixed(2);
   };
 
-  const handleCheckOut = () => {
-    alert("Successfully purchased!");
-    navigate("/thankyou");
+  const handleCheckOut = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/checkout",
+        {},
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        alert("Order successfully placed!");
+        setCartItems([]);
+        navigate("/thankyou");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -58,20 +70,30 @@ const CartPage = () => {
       </div>
       <div className="h-full grid grid-rows-[auto_1fr] gap-1">
         {cartItems.length === 0 ? (
-          <div className="text-gray-500">Your cart is empty. Browse movies to add some!</div>
+          <div className="text-gray-500">
+            Your cart is empty. Browse movies to add some!
+          </div>
         ) : (
           <>
             <h1 className="text-2xl">Cart</h1>
             <div className="h-fill grid grid-cols-[70%_30%] gap-1">
               <div className="border flex flex-col gap-1 p-1">
                 {cartItems.map((item) => (
-                  <CartWidget key={item.productId} item={item} onDelete={handleDelete} />
+                  <CartWidget
+                    key={item.productId}
+                    item={item}
+                    onDelete={handleDelete}
+                  />
                 ))}
               </div>
               <div className="border">
                 <h1>Order Summary</h1>
                 <p>Total: ${calculateTotal()}</p>
-                <button className="border" onClick={handleCheckOut}>
+                <button
+                  className="border"
+                  onClick={handleCheckOut}
+                  disabled={cartItems.length === 0}
+                >
                   Check Out
                 </button>
               </div>
